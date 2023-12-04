@@ -20,42 +20,30 @@ public class PracticeMap {
                 5,5,
                 6,1
         );
-//        Map<String, String> map = new HashMap<>();
-//        map.put("asd", "qwe");
-//        map.put("dsa", "ewq");
-//        map.put("sad", "sda");
-//        map.put("qsx", "qwe");
-//        System.out.println(Task3.isUnique(map));
+        System.out.println(Task4.convertToString(Task4.adding(map1, map2)));
     }
 }
 class Task4 {
-    public static String adding(Map<Integer, Integer> map1, Map<Integer, Integer> map2){
-        // 8x^6 + 9x^5 + 6x^3 + 3x^1 + 10x^0
-//        Map<Integer,Integer> map1 = Map.of(
-//                0,5,
-//                1,3,
-//                3,2,
-//                5,4,
-//                6,7
-//        );
-//
-//        Map<Integer,Integer> map2 = Map.of(
-//                0,5,
-//                3,4,
-//                5,5,
-//                6,1
-//        );
-        StringBuilder str = new StringBuilder();
-        String xAndPower = "x^";
-        for (int i = map1.size() - 1; i >= 0; i++) {
-            if (map1.containsKey(map2)){
-                str.append(12);
-            }
+    public static String convertToString(Map<Integer, Integer> map){
+        Map<Integer, Integer> result = new TreeMap<>(Comparator.reverseOrder());
+        result.putAll(map);
+        List<String> list = new ArrayList<>();
+        for (Map.Entry<Integer, Integer> entry : result.entrySet()) {
+            String value = entry.getKey() == 0
+                    ? String.valueOf(entry.getValue())
+                    : entry.getValue() + "x^" + entry.getKey();
+            list.add(value);
         }
-        return null;
+        return String.join(" + ", list);
+    }
+    public static Map<Integer, Integer> adding(Map<Integer, Integer> map1, Map<Integer, Integer> map2){
+        Map<Integer, Integer> resultMap = new HashMap<>(map1);
+        for (Map.Entry<Integer, Integer> entry : map2.entrySet()) {
+            resultMap.merge(entry.getKey(), entry.getValue(), Integer::sum);
+        }
+        return resultMap;
     }
 }
-
 class Task3 {
     public static boolean isUnique(Map<String, String> map){
 //        Set<String> values = new HashSet<>(map.values());
@@ -82,5 +70,4 @@ class Task1 {
         }
         return newList;
     }
-
 }
